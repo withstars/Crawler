@@ -38,12 +38,12 @@ def getPic(url):
     for i in pageLinks:
         try:
             s = html.fromstring(requests.get(i).content)
-            picLink = s.xpath('//img[@id = "bigImg"]/@src')
+            picLink = s.xpath('//img[@id = "bigImg"]/@src')[0]
             print(picLink)
             filename = '%s/%s/%s.jpg' % (os.path.abspath('.'), dirName, k)
             print(u"开始下载图片:%s 第%s张" % (dirName, k))
-            with open(filename, "wb") as pic:
-                pic.write(requests.get(picLink).content.encode('utf-8'))
+            with open(filename, "wb+") as pic:
+                pic.write(requests.get(picLink).content)
             k += 1
         except:
             pass
